@@ -94,7 +94,7 @@ jobs:
             -u TwitchDownloader \ 
             -v ${{ steps.get-version.outputs.version }} \
             -p publish \
-            -c ${{ matrix.channel }} ${{ matrix.target-platform == 'linux' && '\ -i TwitchDownloader/Assets/Images/Logo.png' || '' }}
+            -c ${{ matrix.channel }} ${{ matrix.target-platform == 'linux' && '\ -i TwitchDownloader/Assets/Images/Logo.png' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
