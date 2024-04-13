@@ -77,7 +77,7 @@ public sealed partial class UpdateViewModel : ViewModelBase
         SukiHost.CloseDialog();
     }
 
-    protected override async Task ActivatedAsync()
+    public override async void Activated()
     {
         try
         {
@@ -105,4 +105,5 @@ public sealed partial class UpdateViewModel : ViewModelBase
             IsLoading = false;
         }
     }
+
 }

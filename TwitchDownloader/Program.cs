@@ -1,12 +1,12 @@
 ﻿using Avalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using ReactiveUI.Avalonia.Splat;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.FileEx;
 using SukiUI;
 using TwitchDownloader.Core;
+using TwitchDownloader.Extensions;
 using TwitchDownloader.Helpers;
 using Velopack;
 using Velopack.Sources;
@@ -46,7 +46,7 @@ internal static class Program
             .WithInterFont()
             .LogToTrace()
             .UsePlatformDetect()
-            .UseReactiveUIWithMicrosoftDependencyResolver(
+            .UseMicrosoftDependencyInjection(
                 services =>
                 {
                     services.AddCore();
@@ -65,14 +65,17 @@ internal static class Program
                         builder.ClearProviders();
                         builder.AddSerilog(dispose: true);
                     });
+                },
+                _ =>
+                {
+                    SukiTheme.GetInstance().SetBackgroundAnimationsEnabled(true);
                 }
-            )
-            .AfterSetup(_ => { SukiTheme.GetInstance().SetBackgroundAnimationsEnabled(true); });
+            );
 
     private static void ConfigureLogger()
     {
         const string OUTPUT_TEMPLATE =
-            "[{Timestamp:HH:mm:ss} {Level:u3}][{SourceContext}] {Message:lj}{NewLine}{Exception}";
+            "[{Timestamp:HH:mm:ss} {Level:u3}][{SourceContext}]: {Message:lj}{NewLine}{Exception}";
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Is(LogEventLevel.Debug)
             .WriteTo.Console(outputTemplate: OUTPUT_TEMPLATE)

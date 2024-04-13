@@ -13,8 +13,8 @@
     </Application.DataTemplates>
 
     <Application.Styles>
-        <suki:SukiTheme ThemeColor="Red" />
+        <suki:SukiTheme ThemeColor="Blue" />
         <materialIcon:MaterialIconStyles />
-        <StyleInclude Source="/Styles/Index.axaml" />
+        <StyleInclude Source="Styles/Index.axaml" />
     </Application.Styles>
 </Application>

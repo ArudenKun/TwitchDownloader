@@ -4,7 +4,7 @@ using TwitchDownloader.Views.Abstractions;
 
 namespace TwitchDownloader.Views;
 
-public partial class MainWindow : ReactiveSukiWindow<MainWindowViewModel>
+public partial class MainWindow : SukiWindowBase<MainWindowViewModel>
 {
     public MainWindow()
     {

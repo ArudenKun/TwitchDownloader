@@ -1,9 +1,9 @@
-﻿using Avalonia.ReactiveUI;
-using TwitchDownloader.ViewModels;
+﻿using TwitchDownloader.Views.Abstractions;
+using UpdateViewModel = TwitchDownloader.ViewModels.UpdateViewModel;
 
 namespace TwitchDownloader.Views;
 
-public partial class UpdateView : ReactiveUserControl<UpdateViewModel>
+public partial class UpdateView : UserControlBase<UpdateViewModel>
 {
     public UpdateView()
     {

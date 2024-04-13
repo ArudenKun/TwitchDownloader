@@ -6,11 +6,11 @@
     xmlns:materialIcon="using:Material.Icons.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:suki="using:SukiUI.Controls"
-    xmlns:vm="using:TwitchDownloader.ViewModels"
+    xmlns:v="using:TwitchDownloader.Views"
     Title="TwitchDownloader"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="vm:MainWindowViewModel"
+    x:DataType="v:MainWindow"
     CanResize="False"
     Icon="/Assets/logo.ico"
     WindowStartupLocation="CenterScreen"
@@ -22,7 +22,7 @@
             VerticalAlignment="Center"
             Source="/Assets/logo.ico" />
     </suki:SukiWindow.LogoContent>
-    <suki:SukiSideMenu ItemsSource="{Binding Pages}">
+    <suki:SukiSideMenu ItemsSource="{Binding ViewModel.Pages}">
         <suki:SukiSideMenu.HeaderContent>
             <Image
                 Width="80"
@@ -52,7 +52,7 @@
                 </StackPanel.Styles>
                 <Button
                     Classes="Outlined"
-                    Command="{Binding OpenUrlCommand}"
+                    Command="{Binding ViewModel.OpenUrlCommand}"
                     CommandParameter="https://github.com/ArudenKun/TwitchDownloader"
                     ToolTip.Tip="Open On GitHub.">
                     <materialIcon:MaterialIcon Kind="Github" />

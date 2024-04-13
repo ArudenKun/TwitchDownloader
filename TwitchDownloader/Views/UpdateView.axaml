@@ -6,29 +6,29 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:suki="using:SukiUI.Controls"
     xmlns:sukiContent="using:SukiUI.Content"
-    xmlns:vm="using:TwitchDownloader.ViewModels"
+    xmlns:v="using:TwitchDownloader.Views"
     Width="700"
     Height="325"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="vm:UpdateViewModel"
+    x:DataType="v:UpdateView"
     mc:Ignorable="d">
     <Grid ColumnDefinitions="*, Auto">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <suki:WaveProgress
                 Height="200"
                 IsTextVisible="True"
-                Value="{Binding DownloadProgress}" />
+                Value="{Binding ViewModel.DownloadProgress}" />
             <suki:Stepper
                 AlternativeStyle="True"
-                Index="{Binding StepIndex}"
-                Steps="{Binding Steps}" />
+                Index="{Binding ViewModel.StepIndex}"
+                Steps="{Binding ViewModel.Steps}" />
         </StackPanel>
         <!-- <Image Grid.Column="0" Source="../Assets/Images/Logo.png" Height="200" /> -->
         <suki:BusyArea
             Grid.Column="1"
             Margin="0,0,40,0"
-            IsBusy="{Binding IsLoading}">
+            IsBusy="{Binding ViewModel.IsLoading}">
             <StackPanel VerticalAlignment="Center">
                 <TextBlock
                     Classes="h3"
@@ -38,11 +38,11 @@
                 <TextBlock
                     Classes="Primary"
                     FontSize="24"
-                    Text="{Binding Version}"
+                    Text="{Binding ViewModel.Version}"
                     TextAlignment="Center" />
                 <suki:GlassCard
                     Margin="0,20,0,8"
-                    Command="{Binding UpdateCommand}"
+                    Command="{Binding ViewModel.UpdateCommand}"
                     IsInteractive="True">
                     <Panel>
                         <TextBlock
@@ -58,7 +58,7 @@
                 </suki:GlassCard>
                 <suki:GlassCard
                     Margin="0,0,0,8"
-                    Command="{Binding SkipUpdateCommand}"
+                    Command="{Binding ViewModel.SkipUpdateCommand}"
                     IsInteractive="True">
                     <Panel>
                         <TextBlock
@@ -74,7 +74,7 @@
                 </suki:GlassCard>
                 <suki:GlassCard
                     Margin="0,0,0,8"
-                    Command="{Binding CloseUpdateCommand}"
+                    Command="{Binding ViewModel.CloseUpdateCommand}"
                     IsInteractive="True">
                     <Panel>
                         <TextBlock

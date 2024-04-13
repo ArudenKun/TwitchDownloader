@@ -5,15 +5,17 @@
     xmlns:controls="using:TwitchDownloader.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:vmp="using:TwitchDownloader.ViewModels.Pages"
+    xmlns:v="using:TwitchDownloader.Views.Pages"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="vmp:SettingsViewModel"
+    x:DataType="v:SettingsView"
     mc:Ignorable="d">
     <Panel HorizontalAlignment="Center" VerticalAlignment="Center">
         <controls:Hyperlink
             Content="(?)"
-            NavigateUri="https://github.com/ArudenKun/TwitchDownloader"
+            NavigateUri="http://github.com/amwx/FluentAvalonia"
             ToolTip.Tip="Test" />
+
+        <Button Command="{Binding ViewModel.ChangeThemeCommand}" Content="Change Theme" />
     </Panel>
 </UserControl>

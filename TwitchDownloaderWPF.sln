@@ -17,6 +17,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDownloader.SourceGene
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDownloader", "TwitchDownloader\TwitchDownloader.csproj", "{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{76F8A9CB-DEFC-4623-8E07-B0D52C4A3A66}"
+	ProjectSection(SolutionItems) = preProject
+		build-win-dev.bat = build-win-dev.bat
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

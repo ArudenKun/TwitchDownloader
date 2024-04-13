@@ -1,8 +1,16 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="TwitchDownloader.Views.Pages.VodDownloadView">
-    Welcome to Vod Download
+﻿<UserControl
+    x:Class="TwitchDownloader.Views.Pages.VodDownloadView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:TwitchDownloader.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialIcon="using:Material.Icons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="using:TwitchDownloader.Resources"
+    xmlns:v="using:TwitchDownloader.Views.Pages"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="v:VodDownloadView"
+    mc:Ignorable="d">
+    <TextBlock Text="YEET"/>
 </UserControl>

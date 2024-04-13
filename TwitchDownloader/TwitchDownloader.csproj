@@ -34,8 +34,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="AnimatedImage.Avalonia" Version="1.0.7" />
-        <PackageReference Include="AutoInterface" Version="2.2.1">
+        <PackageReference Include="AutoInterface" Version="2.2.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -44,7 +43,6 @@
         <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10"/>
-        <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2"/>
         <PackageReference Include="DependencyPropertyGenerator" Version="1.4.0">
             <PrivateAssets>all</PrivateAssets>
@@ -53,11 +51,10 @@
         <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="HotAvalonia" Version="1.0.1"/>
         <PackageReference Include="HotAvalonia.Extensions" Version="1.0.1" PrivateAssets="all"/>
         <PackageReference Include="Humanizer" Version="2.14.1"/>
-        <PackageReference Include="Material.Icons.Avalonia" Version="2.1.9" />
+        <PackageReference Include="Material.Icons.Avalonia" Version="2.1.0"/>
         <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0"/>
         <PackageReference Include="Serilog.Sinks.Console" Version="5.0.1"/>
         <PackageReference Include="Serilog.Sinks.FileEx" Version="5.1.8"/>
-        <PackageReference Include="Splat.Avalonia.Microsoft.Extensions.DependencyInjection" Version="14.8.12" />
         <PackageReference Include="SukiUI" Version="6.0.0-beta4"/>
         <PackageReference Include="Velopack" Version="0.0.359"/>
     </ItemGroup>

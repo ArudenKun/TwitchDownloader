@@ -1,9 +1,9 @@
-﻿using Avalonia.ReactiveUI;
-using TwitchDownloader.ViewModels.Pages;
+﻿using TwitchDownloader.ViewModels.Pages;
+using TwitchDownloader.Views.Abstractions;
 
 namespace TwitchDownloader.Views.Pages;
 
-public partial class SettingsView : ReactiveUserControl<SettingsViewModel>
+public partial class SettingsView : UserControlBase<SettingsViewModel>
 {
     public SettingsView()
     {
