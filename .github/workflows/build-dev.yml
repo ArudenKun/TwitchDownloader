@@ -58,10 +58,6 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget
-            
-      - name: Restore Dependencies
-        if: ${{ steps.cache.outputs.cache-hit == false }}
-        run: dotnet restore TwitchDownloader/TwitchDownloader.csproj
 
       - name: Install FUSE
         if: ${{ matrix.os == 'ubuntu-latest' }}
