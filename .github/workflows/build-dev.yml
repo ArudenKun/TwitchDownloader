@@ -64,6 +64,11 @@ jobs:
           sudo add-apt-repository universe
           sudo apt install libfuse2
 
+      - name: Install Velopack
+        run: |
+          dotnet new tool-manifest
+          dotnet tool install vpk
+
       - name: Publish
         run: dotnet publish TwitchDownloader/TwitchDownloader.csproj -c Release -o publish -p:Version=${{ steps.get-version.outputs.version }}
 
@@ -87,14 +92,13 @@ jobs:
 
       - name: Pack Release
         shell: bash
-        run: |
-          dotnet new tool-manifest
-          dotnet tool install vpk
-          dotnet vpk pack \ 
-            -u TwitchDownloader \ 
-            -v ${{ steps.get-version.outputs.version }} \
-            -p publish \
-            -c ${{ matrix.channel }} ${{ matrix.target-platform == 'linux' && '\ -i TwitchDownloader/Assets/Images/Logo.png' }}
+        run: >
+          dotnet vpk pack 
+          -u TwitchDownloader 
+          -v ${{ steps.get-version.outputs.version }} 
+          -p publish 
+          -c ${{ matrix.channel }} 
+          ${{ matrix.target-platform == 'linux' && '-i TwitchDownloader/Assets/Images/Logo.png' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
