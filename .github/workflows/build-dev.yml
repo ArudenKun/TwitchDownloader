@@ -50,7 +50,7 @@ jobs:
         shell: bash
         run: echo "version=$(grep -oE '<Version>[^<]+' TwitchDownloader/TwitchDownloader.csproj | sed 's/<Version>//')-dev.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
-      - name: Dependency Cache
+      - name: Cache Dependencies
         id: cache
         uses: actions/cache@v4
         with:
