@@ -50,18 +50,24 @@ jobs:
         shell: bash
         run: echo "version=$(grep -oE '<Version>[^<]+' TwitchDownloader/TwitchDownloader.csproj | sed 's/<Version>//')-dev.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
+      - name: Cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+            
+      - name: Restore Dependencies
+        if: ${{ steps.cache.outputs.cache-hit == 'false' }}
+        run: dotnet restore TwitchDownloader/TwitchDownloader.csproj
+
       - name: Install FUSE
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
           sudo add-apt-repository universe
           sudo apt install libfuse2
-
-      - name: Install .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 8.x
-          cache: true
-          cache-dependency-path: TwitchDownloader/packages.lock.json
 
       - name: Install Velopack
         run: dotnet tool install -g vpk
@@ -108,7 +114,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
-    needs: [build]
+    needs: [ build ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
