@@ -30,7 +30,7 @@ public sealed partial class MainWindowViewModel : ViewModelBase, IActivatable
         Pages = new ObservableCollection<PageViewModelBase>(pages.OrderBy(x => x.Index));
     }
 
-    public override async void Activated()
+    protected override async void HandleActivated()
     {
         if (!_updateManager.IsInstalled)
         {

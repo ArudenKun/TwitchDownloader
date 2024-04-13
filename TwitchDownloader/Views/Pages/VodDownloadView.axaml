@@ -13,7 +13,7 @@
     x:DataType="v:VodDownloadView"
     mc:Ignorable="d">
     <Panel>
-        <Separator BorderThickness="20" BorderBrush="Red" />
+        <Border BorderThickness="101" Margin="0,5,0,5" BorderBrush="Red" />
         <TextBlock Text="YEET" />
     </Panel>
 </UserControl>

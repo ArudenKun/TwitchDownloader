@@ -14,7 +14,7 @@ public sealed partial class VodDownloadViewModel : PageViewModelBase
     public override int Index => 1;
     public override MaterialIconKind Icon => MaterialIconKind.Video;
 
-    public override void Activated()
+    protected override void HandleActivated()
     {
         RandomNumber = Random.Shared.Next(1, 10);
     }
