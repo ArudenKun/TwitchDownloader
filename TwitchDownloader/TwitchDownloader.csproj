@@ -8,7 +8,7 @@
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
         <!--        Publish Options-->
         <PublishTrimmed>true</PublishTrimmed>
-        <SelfContained>false</SelfContained>
+        <SelfContained>true</SelfContained>
         <!--        Other Options-->
         <DefineConstants>$(DefineConstants);HAS_AVALONIA</DefineConstants>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>

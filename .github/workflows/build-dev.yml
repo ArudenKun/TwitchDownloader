@@ -50,8 +50,7 @@ jobs:
         shell: bash
         run: echo "version=$(grep -oE '<Version>[^<]+' TwitchDownloader/TwitchDownloader.csproj | sed 's/<Version>//')-dev.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
-      - name: Cache Dependencies
-        id: cache-dependencies
+      - name: Check Cache
         uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
@@ -95,8 +94,7 @@ jobs:
             -u TwitchDownloader \ 
             -v ${{ steps.get-version.outputs.version }} \
             -p publish \
-            -c ${{ matrix.channel }} \
-            -f net8.0-x64-desktop ${{ matrix.target-platform == 'linux' && '\ -i TwitchDownloader/Assets/Images/Logo.png' || '' }}
+            -c ${{ matrix.channel }} ${{ matrix.target-platform == 'linux' && '\ -i TwitchDownloader/Assets/Images/Logo.png' || '' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
