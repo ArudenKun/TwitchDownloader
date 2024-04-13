@@ -60,7 +60,7 @@ jobs:
             ${{ runner.os }}-nuget
             
       - name: Restore Dependencies
-        if: ${{ steps.cache.outputs.cache-hit == 'false' }}
+        if: ${{ steps.cache.outputs.cache-hit == false }}
         run: dotnet restore TwitchDownloader/TwitchDownloader.csproj
 
       - name: Install FUSE
