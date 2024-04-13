@@ -33,46 +33,46 @@ internal sealed class StaticViewLocatorGenerator
         source.Line("using System;");
         source.Line("using System.Collections.Generic;");
         source.Line("using Avalonia.Controls;");
-        source.Line("using HanumanInstitute.MvvmDialogs.Avalonia;");
+        // source.Line("using HanumanInstitute.MvvmDialogs.Avalonia;");
         source.Line();
 
-        source.PartialTypeBlockBrace("StrongViewLocator",() =>
+        source.PartialTypeBlockBrace(() =>
         {
-            source.Constructor(() =>
-            {
-                foreach (var viewModelSymbol in viewModelSymbols)
-                {
-                    var viewName = GetViewName(viewModelSymbol);
-                    var viewSymbol = compilation.GetTypeByMetadataName(viewName);
-                    
-                    if (viewSymbol is null)
-                    {
-                        continue;
-                    }
-                    
-                    source.Line($"Register<{viewModelSymbol.ToFullDisplayString()}, {viewSymbol.ToFullDisplayString()}>();");
-                }
-            });
-            // source.Line(
-            //     "public static Dictionary<Type, Func<Control>> Registrations { get; } = new()"
-            // );
-            // source.BlockDecl(() =>
+            // source.Constructor(() =>
             // {
             //     foreach (var viewModelSymbol in viewModelSymbols)
             //     {
             //         var viewName = GetViewName(viewModelSymbol);
-            //         var view = compilation.GetTypeByMetadataName(viewName);
-            //
-            //         if (view is null)
+            //         var viewSymbol = compilation.GetTypeByMetadataName(viewName);
+            //         
+            //         if (viewSymbol is null)
             //         {
             //             continue;
             //         }
-            //
-            //         source.Line(
-            //             $"[typeof({viewModelSymbol.ToFullDisplayString()})] = () => new {view.ToFullDisplayString()}(),"
-            //         );
+            //         
+            //         source.Line($"Register<{viewModelSymbol.ToFullDisplayString()}, {viewSymbol.ToFullDisplayString()}>();");
             //     }
             // });
+            source.Line(
+                "public static Dictionary<Type, Func<Control>> Registrations { get; } = new()"
+            );
+            source.BlockDecl(() =>
+            {
+                foreach (var viewModelSymbol in viewModelSymbols)
+                {
+                    var viewName = GetViewName(viewModelSymbol);
+                    var view = compilation.GetTypeByMetadataName(viewName);
+
+                    if (view is null)
+                    {
+                        continue;
+                    }
+
+                    source.Line(
+                        $"[typeof({viewModelSymbol.ToFullDisplayString()})] = () => new {view.ToFullDisplayString()}(),"
+                    );
+                }
+            });
         });
 
         return (source.ToString(), null);

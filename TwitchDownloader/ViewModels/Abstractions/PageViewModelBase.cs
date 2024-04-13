@@ -1,20 +1,12 @@
-﻿
-using FluentIcons.Avalonia.Fluent;
-using FluentIcons.Common;
+﻿using Humanizer;
+using Material.Icons;
 
 namespace TwitchDownloader.ViewModels.Abstractions;
 
 public abstract class PageViewModelBase : ViewModelBase
 {
-    public virtual string Name => GetName();
+    public virtual string DisplayName => GetName();
     public virtual int Index => 0;
-
-    public virtual SymbolIconSource Icon => new()
-    {
-        Symbol = Symbol.Home,
-    };
-
-    public virtual bool IsFooter => false;
-    
-    protected virtual string GetName() => GetType().Name.Replace("ViewModel", "");
+    public virtual MaterialIconKind Icon => MaterialIconKind.Home;
+    protected virtual string GetName() => GetType().Name.Replace("ViewModel", "").Titleize();
 }

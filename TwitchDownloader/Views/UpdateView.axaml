@@ -1,0 +1,94 @@
+﻿<UserControl
+    x:Class="TwitchDownloader.Views.UpdateView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:suki="using:SukiUI.Controls"
+    xmlns:sukiContent="using:SukiUI.Content"
+    xmlns:vm="using:TwitchDownloader.ViewModels"
+    Width="700"
+    Height="325"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:UpdateViewModel"
+    mc:Ignorable="d">
+    <Grid ColumnDefinitions="*, Auto">
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <suki:WaveProgress
+                Height="200"
+                IsTextVisible="True"
+                Value="{Binding DownloadProgress}" />
+            <suki:Stepper
+                AlternativeStyle="True"
+                Index="{Binding StepIndex}"
+                Steps="{Binding Steps}" />
+        </StackPanel>
+        <!-- <Image Grid.Column="0" Source="../Assets/Images/Logo.png" Height="200" /> -->
+        <suki:BusyArea
+            Grid.Column="1"
+            Margin="0,0,40,0"
+            IsBusy="{Binding IsLoading}">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock
+                    Classes="h3"
+                    FontWeight="Bold"
+                    Text="A new version is available"
+                    TextAlignment="Center" />
+                <TextBlock
+                    Classes="Primary"
+                    FontSize="24"
+                    Text="{Binding Version}"
+                    TextAlignment="Center" />
+                <suki:GlassCard
+                    Margin="0,20,0,8"
+                    Command="{Binding UpdateCommand}"
+                    IsInteractive="True">
+                    <Panel>
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            HorizontalAlignment="Left"
+                            FontWeight="Bold"
+                            Text="Update" />
+                        <PathIcon
+                            HorizontalAlignment="Right"
+                            Data="{x:Static sukiContent:Icons.CircleOutlineCheck}"
+                            Foreground="Green" />
+                    </Panel>
+                </suki:GlassCard>
+                <suki:GlassCard
+                    Margin="0,0,0,8"
+                    Command="{Binding SkipUpdateCommand}"
+                    IsInteractive="True">
+                    <Panel>
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            HorizontalAlignment="Left"
+                            FontWeight="Bold"
+                            Text="Skip" />
+                        <PathIcon
+                            HorizontalAlignment="Right"
+                            Data="{x:Static sukiContent:Icons.CircleOutlineMinus}"
+                            Foreground="Goldenrod" />
+                    </Panel>
+                </suki:GlassCard>
+                <suki:GlassCard
+                    Margin="0,0,0,8"
+                    Command="{Binding CloseUpdateCommand}"
+                    IsInteractive="True">
+                    <Panel>
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            HorizontalAlignment="Left"
+                            FontWeight="Bold"
+                            Text="Close" />
+                        <PathIcon
+                            HorizontalAlignment="Right"
+                            Data="{x:Static sukiContent:Icons.CircleOutlineClose}"
+                            Foreground="Red" />
+                    </Panel>
+                </suki:GlassCard>
+            </StackPanel>
+        </suki:BusyArea>
+    </Grid>
+</UserControl>

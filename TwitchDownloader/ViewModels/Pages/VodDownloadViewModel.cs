@@ -1,12 +1,16 @@
-﻿using FluentIcons.Avalonia.Fluent;
-using FluentIcons.Common;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using Material.Icons;
 using TwitchDownloader.Resources;
 using TwitchDownloader.ViewModels.Abstractions;
 
 namespace TwitchDownloader.ViewModels.Pages;
 
-public sealed class VodDownloadViewModel : PageViewModelBase
+public sealed partial class VodDownloadViewModel : PageViewModelBase
 {
-    public override string Name => Strings.VodDownload;
-    public override SymbolIconSource Icon => new() { Symbol = Symbol.Video };
+    [ObservableProperty]
+    private int _randomNumber;
+
+    public override string DisplayName => Strings.VodDownload;
+    public override int Index => 1;
+    public override MaterialIconKind Icon => MaterialIconKind.Video;
 }

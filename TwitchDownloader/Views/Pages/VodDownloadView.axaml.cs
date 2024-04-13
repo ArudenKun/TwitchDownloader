@@ -1,8 +1,9 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia.ReactiveUI;
+using TwitchDownloader.ViewModels.Pages;
 
 namespace TwitchDownloader.Views.Pages;
 
-public partial class VodDownloadView : UserControl
+public sealed partial class VodDownloadView : ReactiveUserControl<VodDownloadViewModel>
 {
     public VodDownloadView()
     {

@@ -1,44 +1,66 @@
-<uiWindow:AppWindow
+<suki:SukiWindow
     x:Class="TwitchDownloader.Views.MainWindow"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:materialIcon="using:Material.Icons.Avalonia"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:suki="using:SukiUI.Controls"
     xmlns:vm="using:TwitchDownloader.ViewModels"
-    xmlns:uiWindow="using:FluentAvalonia.UI.Windowing"
-    xmlns:ui="using:FluentAvalonia.UI.Controls"
-    xmlns:behaviors="clr-namespace:TwitchDownloader.Behaviors"
-    Title="Twitch Downloader"
-    Width="1280"
-    Height="720"
-    MinWidth="1280"
-    MinHeight="720"
-    WindowStartupLocation="CenterScreen"
+    Title="TwitchDownloader"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
     x:DataType="vm:MainWindowViewModel"
+    CanResize="False"
     Icon="/Assets/logo.ico"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <ui:NavigationView SelectedItem="{Binding CurrentPage}"
-                       MenuItemsSource="{Binding Menus}"
-                       FooterMenuItemsSource="{Binding Footers}"
-                       IsBackButtonVisible="False"
-                       IsPaneToggleButtonVisible="True"
-                       IsSettingsVisible="False">
-        <Interaction.Behaviors>
-            <behaviors:NavigationViewItemInvokedTrigger>
-                <InvokeCommandAction Command="{Binding NavigateCommand}" PassEventArgsToCommand="True" />
-            </behaviors:NavigationViewItemInvokedTrigger>
-        </Interaction.Behaviors>
-        <Grid RowDefinitions="*, 20">
-            <ui:Frame x:Name="Frame"/>
-            <StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="5">
-                <TextBlock Text="First"/>
-                <TextBlock Text="Second"/>
+    <suki:SukiWindow.LogoContent>
+        <Image
+            Width="20"
+            Height="20"
+            VerticalAlignment="Center"
+            Source="/Assets/logo.ico" />
+    </suki:SukiWindow.LogoContent>
+    <suki:SukiSideMenu ItemsSource="{Binding Pages}">
+        <suki:SukiSideMenu.HeaderContent>
+            <Image
+                Width="80"
+                Height="80"
+                Margin="30,10,30,30"
+                Source="/Assets/logo.ico" />
+        </suki:SukiSideMenu.HeaderContent>
+        <suki:SukiSideMenu.ItemTemplate>
+            <DataTemplate>
+                <suki:SukiSideMenuItem Header="{Binding DisplayName}">
+                    <suki:SukiSideMenuItem.Icon>
+                        <materialIcon:MaterialIcon Kind="{Binding Icon}" />
+                    </suki:SukiSideMenuItem.Icon>
+                </suki:SukiSideMenuItem>
+            </DataTemplate>
+        </suki:SukiSideMenu.ItemTemplate>
+        <suki:SukiSideMenu.FooterContent>
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="5">
+                <StackPanel.Styles>
+                    <Style Selector="materialIcon|MaterialIcon">
+                        <Setter Property="Width" Value="20" />
+                        <Setter Property="Height" Value="20" />
+                    </Style>
+                </StackPanel.Styles>
+                <Button
+                    Classes="Outlined"
+                    Command="{Binding OpenUrlCommand}"
+                    CommandParameter="https://github.com/ArudenKun/TwitchDownloader"
+                    ToolTip.Tip="Open On GitHub.">
+                    <materialIcon:MaterialIcon Kind="Github" />
+                </Button>
+                <Button Classes="Outlined">
+                    <materialIcon:MaterialIcon Kind="Dollar" />
+                </Button>
             </StackPanel>
-        </Grid>
-    </ui:NavigationView>
-    <Interaction.Behaviors>
-        <behaviors:LoadedTrigger>
-            <InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding #Frame}"/>
-        </behaviors:LoadedTrigger>
-    </Interaction.Behaviors>
-</uiWindow:AppWindow>
+        </suki:SukiSideMenu.FooterContent>
+    </suki:SukiSideMenu>
+</suki:SukiWindow>

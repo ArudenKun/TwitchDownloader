@@ -1,76 +1,63 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using CommunityToolkit.Mvvm.ComponentModel;
+using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.Input;
-using FluentAvalonia.UI.Controls;
-using TwitchDownloader.Extensions;
+using Microsoft.Extensions.Logging;
+using SukiUI.Controls;
 using TwitchDownloader.SourceGenerators.Attributes;
 using TwitchDownloader.ViewModels.Abstractions;
-using SymbolIconSource = FluentIcons.Avalonia.Fluent.SymbolIconSource;
+using TwitchDownloader.Views;
+using Velopack;
 
 namespace TwitchDownloader.ViewModels;
 
 [Singleton]
 public sealed partial class MainWindowViewModel : ViewModelBase
 {
-    private readonly INavigationPageFactory _navigationPageFactory;
+    private readonly UpdateManager _updateManager;
+    private readonly ILogger<MainWindowViewModel> _logger;
 
+    public IEnumerable<PageViewModelBase> Pages { get; }
 
-    private Frame _frame = null!;
-
-    [ObservableProperty] private NavigationViewItem _currentPage;
-    [ObservableProperty] private INotifyPropertyChanged _currentPageContent = null!;
-
-    public MainWindowViewModel(IEnumerable<PageViewModelBase> pages,
-        INavigationPageFactory navigationPageFactory)
+    public MainWindowViewModel(
+        UpdateManager updateManager,
+        ILogger<MainWindowViewModel> logger,
+        IEnumerable<PageViewModelBase> pages
+    )
     {
-        _navigationPageFactory = navigationPageFactory;
+        _updateManager = updateManager;
+        _logger = logger;
 
-        pages = pages.ToArray();
-        Menus = pages.OrderBy(x => x.Index).Where(x => !x.IsFooter).Select(x => new NavigationViewItem
-        {
-            Content = x.Name,
-            IconSource = x.Icon,
-            Tag = x
-        }).ToArray();
-        Footers = pages.OrderBy(x => x.Index).Where(x => x.IsFooter).Select(x => new NavigationViewItem
-        {
-            Content = x.Name,
-            IconSource = x.Icon,
-            Tag = x
-        }).ToArray();
-
-        CurrentPage = Menus[0];
+        Pages = pages.OrderBy(x => x.Index);
     }
 
-    public NavigationViewItem[] Menus { get; }
-    public NavigationViewItem[] Footers { get; }
-
-    [RelayCommand]
-    private void Loaded(Frame frame)
+    protected override async Task ActivatedAsync()
     {
-        _frame = frame;
-        _frame.NavigationPageFactory = _navigationPageFactory;
-        _frame.NavigateFromObject(Menus[0].Tag);
-    }
-
-    [RelayCommand]
-    private void Navigate(NavigationViewItemInvokedEventArgs args)
-    {
-        if (args.InvokedItemContainer is not NavigationViewItem navigationViewItem)
+        if (!_updateManager.IsInstalled)
         {
+            _logger.LogWarning("Velopack is not configured");
             return;
         }
 
-        _frame.NavigateFromObject(navigationViewItem.Tag);
+        try
+        {
+            _logger.LogInformation("Checking for new updates");
+            var newVersion = await _updateManager.CheckForUpdatesAsync();
+
+            if (newVersion is not null)
+            {
+                SukiHost.ShowDialog(new UpdateView());
+            }
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Fetching Update Error");
+        }
     }
 
-    partial void OnCurrentPageChanged(NavigationViewItem? oldValue, NavigationViewItem newValue)
+    [RelayCommand]
+    private void ShowUpdateDialog()
     {
-        if (oldValue is not null)
-            oldValue.IconSource.As<SymbolIconSource>().IsFilled = false;
-
-        newValue.IconSource.As<SymbolIconSource>().IsFilled = true;
+        SukiHost.ShowDialog(new UpdateView());
     }
 }

@@ -1,0 +1,48 @@
+<uiWindow:AppWindow
+    x:Class="TwitchDownloader.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TwitchDownloader.ViewModels"
+    xmlns:uiWindow="using:FluentAvalonia.UI.Windowing"
+    xmlns:animGif="https://github.com/whistyun/AnimatedImage.Avalonia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:behaviors="clr-namespace:TwitchDownloader.Behaviors"
+    Title="Twitch Downloader"
+    Width="1280"
+    Height="720"
+    MinWidth="1280"
+    MinHeight="720"
+    WindowStartupLocation="CenterScreen"
+    x:DataType="vm:MainWindowViewModel"
+    Icon="/Assets/logo.ico"
+    mc:Ignorable="d">
+    <ui:NavigationView SelectedItem="{Binding CurrentPage}"
+                       MenuItemsSource="{Binding Menus}"
+                       FooterMenuItemsSource="{Binding Footers}"
+                       PaneTitle="Menu"
+                       IsBackButtonVisible="False"
+                       IsSettingsVisible="False">
+        <Interaction.Behaviors>
+            <behaviors:NavigationViewItemInvokedTrigger>
+                <InvokeCommandAction Command="{Binding NavigateCommand}" PassEventArgsToCommand="True" />
+            </behaviors:NavigationViewItemInvokedTrigger>
+        </Interaction.Behaviors>
+        <Grid RowDefinitions="*, 20">
+            <ui:Frame x:Name="Frame" />
+            <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                <StackPanel Orientation="Horizontal" Spacing="10" Margin="10,0,0,0">
+                    <Image animGif:ImageBehavior.AnimatedSource="avares://TwitchDownloader/Assets/Images/ppHop.gif" />
+                    <TextBlock Text="Idle" />
+                </StackPanel>
+                <ProgressBar Grid.Column="1" Margin="0,0,10,0" Value="50" ShowProgressText="True" />
+            </Grid>
+        </Grid>
+    </ui:NavigationView>
+    <Interaction.Behaviors>
+        <behaviors:LoadedTrigger>
+            <InvokeCommandAction Command="{Binding LoadedCommand}" CommandParameter="{Binding #Frame}" />
+        </behaviors:LoadedTrigger>
+    </Interaction.Behaviors>
+</uiWindow:AppWindow>
