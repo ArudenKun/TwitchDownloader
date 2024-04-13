@@ -1,10 +1,11 @@
 name: Build and Upload Pull Request
  
 on: 
-  push:
-    branches: [ master ]
-  pull_request:
-    types: [ opened, reopened ]
+  workflow_dispatch: 
+#  push:
+#    branches: [ master ]
+#  pull_request:
+#    types: [ opened, reopened ]
 
 jobs:
   

@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDownloaderCore.Tests"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDownloaderCLI.Tests", "TwitchDownloaderCLI.Tests\TwitchDownloaderCLI.Tests.csproj", "{2AC32E05-56EE-41E2-BAFD-94C3FE900057}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDownloader.SourceGenerators", "TwitchDownloader.SourceGenerators\TwitchDownloader.SourceGenerators.csproj", "{0F058A70-6DC1-4E0B-B834-2950463E87D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitchDownloader", "TwitchDownloader\TwitchDownloader.csproj", "{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +65,22 @@ Global
 		{2AC32E05-56EE-41E2-BAFD-94C3FE900057}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2AC32E05-56EE-41E2-BAFD-94C3FE900057}.Release|x64.ActiveCfg = Release|Any CPU
 		{2AC32E05-56EE-41E2-BAFD-94C3FE900057}.Release|x64.Build.0 = Release|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Debug|x64.Build.0 = Debug|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Release|x64.ActiveCfg = Release|Any CPU
+		{0F058A70-6DC1-4E0B-B834-2950463E87D0}.Release|x64.Build.0 = Release|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Debug|x64.Build.0 = Debug|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Release|x64.ActiveCfg = Release|Any CPU
+		{82077E6E-3DD0-4CBF-B74A-ACBF3C34D6E4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
