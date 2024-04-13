@@ -12,5 +12,8 @@
     d:DesignWidth="800"
     x:DataType="v:VodDownloadView"
     mc:Ignorable="d">
-    <TextBlock Text="YEET"/>
+    <Panel>
+        <Separator BorderThickness="20" BorderBrush="Red" />
+        <TextBlock Text="YEET" />
+    </Panel>
 </UserControl>

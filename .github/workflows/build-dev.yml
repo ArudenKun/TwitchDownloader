@@ -127,6 +127,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: Releases
+          merge-multiple: true
 
       - uses: dev-drprasad/delete-tag-and-release@v1.1
         with:
