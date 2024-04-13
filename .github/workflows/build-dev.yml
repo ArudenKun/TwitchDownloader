@@ -126,12 +126,6 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: linux-build
-          path: Releases
-
-      - uses: actions/download-artifact@v4
-        with:
-          name: windows-build
           path: Releases
 
       - uses: dev-drprasad/delete-tag-and-release@v1.1
