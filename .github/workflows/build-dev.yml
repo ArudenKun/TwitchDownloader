@@ -51,9 +51,12 @@ jobs:
         run: echo "version=$(grep -oE '<Version>[^<]+' TwitchDownloader/TwitchDownloader.csproj | sed 's/<Version>//')-dev.${{ github.run_number }}" >> $GITHUB_OUTPUT
 
       - name: Cache Dependencies
+        id: cache-dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ github.workspace }}/.nuget/packages
+          path: |
+            ${{ github.workspace }}/.nuget/packages
+            ${{ github.workspace }}/.dotnet
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget
@@ -63,9 +66,6 @@ jobs:
         run: |
           sudo add-apt-repository universe
           sudo apt install libfuse2
-
-      - name: Install Velopack
-        run: dotnet tool install -g vpk
 
       - name: Publish
         run: dotnet publish TwitchDownloader/TwitchDownloader.csproj -c Release -o publish -p:Version=${{ steps.get-version.outputs.version }}
@@ -91,7 +91,9 @@ jobs:
       - name: Pack Release
         shell: bash
         run: >
-          vpk pack 
+          dotnet new tool-manifest
+          dotnet tool install vpk
+          dotnet vpk pack 
           -u TwitchDownloader 
           -v ${{ steps.get-version.outputs.version }} 
           -p publish 
