@@ -91,7 +91,12 @@ jobs:
         run: |
           dotnet new tool-manifest
           dotnet tool install vpk
-          dotnet vpk pack -u TwitchDownloader -v ${{ steps.get-version.outputs.version }} -p publish -c ${{ matrix.channel }} ${{ matrix.target-platform == 'linux' && '-i TwitchDownloader/Assets/Images/Logo.png \' || '' }}
+          dotnet vpk pack \ 
+            -u TwitchDownloader \ 
+            -v ${{ steps.get-version.outputs.version }} \
+            -p publish \
+            -c ${{ matrix.channel }} \
+            -f net8.0-x64-desktop ${{ matrix.target-platform == 'linux' && '\ -i TwitchDownloader/Assets/Images/Logo.png' || '' }}
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
