@@ -74,7 +74,7 @@ jobs:
           dotnet tool install vpk
 
       - name: Publish
-        run: dotnet publish TwitchDownloader/TwitchDownloader.csproj -c Release -o publish -p:Version=${{ steps.get-version.outputs.version }} --locked-mode
+        run: dotnet publish TwitchDownloader/TwitchDownloader.csproj -c Release -o publish -p:Version=${{ steps.get-version.outputs.version }} --no-restore
 
       - name: Get FFmpeg Url
         uses: JamesIves/fetch-api-data-action@v2.4.0
