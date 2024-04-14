@@ -10,7 +10,7 @@ namespace TwitchDownloader.ViewModels.Abstractions;
 public abstract partial class ViewModelBase : ObservableValidator, IActivatable
 {
     [RelayCommand]
-    private void OpenUrl(string url) => EnvironmentHelper.OpenUrl(url);
+    private static void OpenUrl(string url) => EnvironmentHelper.OpenUrl(url);
 
     protected ViewModelBase()
     {
@@ -31,7 +31,7 @@ public abstract partial class ViewModelBase : ObservableValidator, IActivatable
         Messenger.UnregisterAll(this);
         HandleDeactivated();
     }
-    
+
     protected virtual void HandleActivated()
     {
     }
