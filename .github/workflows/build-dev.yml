@@ -72,9 +72,13 @@ jobs:
         run: |
           dotnet new tool-manifest
           dotnet tool install vpk
+          
+      - name: Restore
+        if: ${{ steps.check-cache.outputs.cache-hit == false }}
+        run: dotnet restore --locked-mode
 
       - name: Publish
-        run: dotnet publish TwitchDownloader/TwitchDownloader.csproj -c Release -o publish -p:Version=${{ steps.get-version.outputs.version }} --no-restore
+        run: dotnet publish TwitchDownloader/TwitchDownloader.csproj -c Release -o publish -p:Version=${{ steps.get-version.outputs.version }}
 
       - name: Get FFmpeg Url
         uses: JamesIves/fetch-api-data-action@v2.4.0
