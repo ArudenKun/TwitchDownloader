@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IsWindows Condition="'$([System.OperatingSystem]::IsWindows())' == 'true'">true</IsWindows>
+        <IsOSX Condition="'$([System.OperatingSystem]::IsMacOS())' == 'true'">true</IsOSX>
+        <IsLinux Condition="'$([System.OperatingSystem]::IsLinux())' == 'true'">true</IsLinux>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(IsWindows)'=='true'">
+        <DefineConstants>$(DefineConstants);__WINDOWS__</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IsOSX)'=='true'">
+        <DefineConstants>$(DefineConstants);__OSX__</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(IsLinux)'=='true'">
+        <DefineConstants>$(DefineConstants);__LINUX__</DefineConstants>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Extensions\" />
+        <Folder Include="Helpers\" />
+        <Folder Include="Models\"/>
+        <AvaloniaResource Include="Assets\**"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="11.2.0" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.2.0" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.2.0" />
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.2.0" />
+        <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0" />
+        <PackageReference Include="Cogwheel" Version="2.1.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+        <PackageReference Include="Serilog.Sinks.PersistentFile" Version="4.1.0" />
+        <PackageReference Include="Velopack" Version="0.0.626" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TwitchDownloader.Generators\TwitchDownloader.Generators.csproj" OutputItemType="analyzer" ReferenceOutputAssembly="false"/>
+      <ProjectReference Include="..\TwitchDownloader.Hosting\TwitchDownloader.Hosting.csproj" />
+      <ProjectReference Include="..\TwitchDownloaderCore\TwitchDownloaderCore.csproj" />
+    </ItemGroup>
+</Project>
