@@ -40,6 +40,9 @@ public sealed partial class SettingsService : SettingsBase
 
     public string CacheDirectory { get; set; } = AppInfo.CachesDir;
 
+    [JsonConverter(typeof(SmartEnumNameConverter<Theme, string>))]
+    public Theme Theme { get; set; } = Theme.Default;
+
     public override void Save()
     {
         base.Save();

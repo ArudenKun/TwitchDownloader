@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using Ardalis.SmartEnum;
 
 namespace TwitchDownloader.Models;
@@ -22,7 +23,8 @@ public sealed class Language : SmartEnum<Language, string>
         : base(name, value) { }
 
     public static implicit operator Language(CultureInfo culture) =>
-        new(culture.Name, culture.NativeName);
+        List.FirstOrDefault(x => x.Name == culture.Name)
+        ?? new Language(culture.Name, culture.NativeName);
 
     public static implicit operator CultureInfo(Language language) => new(language.Name);
 }
