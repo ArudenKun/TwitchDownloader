@@ -2,9 +2,9 @@
 
 namespace TwitchDownloader.Views.Pages;
 
-public partial class TaskQueuePage : UserControl
+public partial class TaskQueueView : UserControl
 {
-    public TaskQueuePage()
+    public TaskQueueView()
     {
         InitializeComponent();
     }

@@ -2,9 +2,9 @@ using SukiUI.Controls;
 
 namespace TwitchDownloader.Views;
 
-public partial class MainWindow : SukiWindow
+public partial class MainView : SukiWindow
 {
-    public MainWindow()
+    public MainView()
     {
         InitializeComponent();
     }

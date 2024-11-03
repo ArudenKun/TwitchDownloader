@@ -2,9 +2,9 @@
 
 namespace TwitchDownloader.Views.Pages;
 
-public partial class ChatDownloadPage : UserControl
+public partial class ChatUpdaterView : UserControl
 {
-    public ChatDownloadPage()
+    public ChatUpdaterView()
     {
         InitializeComponent();
     }

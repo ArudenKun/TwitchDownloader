@@ -26,9 +26,12 @@
         <DefineConstants>$(DefineConstants);__LINUX__</DefineConstants>
     </PropertyGroup>
 
+    <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+        <DefineConstants>$(DefineConstants);ENABLE_XAML_HOT_RELOAD</DefineConstants>
+    </PropertyGroup>
+
     <ItemGroup>
         <Folder Include="Converters\" />
-        <Folder Include="Extensions\" />
         <Folder Include="Helpers\" />
         <AvaloniaResource Include="Assets\**"/>
         <Folder Include="ViewModels\Abstractions\" />
@@ -44,7 +47,7 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0" />
         <PackageReference Include="Cogwheel" Version="2.1.0" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
-        <PackageReference Include="Material.Icons.Avalonia" Version="2.1.10" />
+        <PackageReference Include="LucideAvalonia" Version="1.6.1" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
         <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
         <PackageReference Include="Serilog.Sinks.PersistentFile" Version="4.1.0" />
@@ -60,6 +63,12 @@
       <ProjectReference Include="..\TwitchDownloader.Generators\TwitchDownloader.Generators.csproj" OutputItemType="analyzer" ReferenceOutputAssembly="false"/>
       <ProjectReference Include="..\TwitchDownloader.Hosting\TwitchDownloader.Hosting.csproj" />
       <ProjectReference Include="..\TwitchDownloaderCore\TwitchDownloaderCore.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="Avalonia.Markup.Xaml.Loader" Version="11.2.0" />
+        <PackageReference Condition="$(DefineConstants.Contains(ENABLE_XAML_HOT_RELOAD))" Include="HotAvalonia" Version="1.1.1" />
+        <PackageReference Include="HotAvalonia.Extensions" Version="1.1.1" PrivateAssets="All" />
     </ItemGroup>
 
     <ItemGroup>

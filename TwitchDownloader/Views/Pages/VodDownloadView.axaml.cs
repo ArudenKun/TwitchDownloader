@@ -2,9 +2,9 @@
 
 namespace TwitchDownloader.Views.Pages;
 
-public partial class VodDownloadPage : UserControl
+public partial class VodDownloadView : UserControl
 {
-    public VodDownloadPage()
+    public VodDownloadView()
     {
         InitializeComponent();
     }

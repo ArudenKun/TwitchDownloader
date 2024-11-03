@@ -2,9 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:material="using:Material.Icons.Avalonia"
              xmlns:translations="using:TwitchDownloader.Translations"
              xmlns:vm="TwitchDownloader.ViewModels"
+             xmlns:lucide="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
              x:DataType="vm:SettingsViewModel"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TwitchDownloader.Views.Dialogs.SettingsView">
@@ -30,11 +30,11 @@
                     Name="CacheDirectoryTextBox"
                     Text="{Binding CacheDirectory}" />
                 <Button Command="{Binding BrowseCacheDirectoryCommand}">
-                    <material:MaterialIcon Kind="FolderSearch" FontSize="24" />
+                    <lucide:Lucide Icon="FolderSearch" FontSize="24" />
                 </Button>
                 <Button Command="{Binding OpenCacheDirectoryCommand}"
                         IsEnabled="{Binding ElementName=CacheDirectoryTextBox, Path=Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                    <material:MaterialIcon Kind="Folder" FontSize="24" />
+                    <lucide:Lucide Icon="FolderOpen" FontSize="24" />
                 </Button>
             </StackPanel>
 

@@ -7,12 +7,7 @@ namespace TwitchDownloader.Services;
 
 public class LanguageService
 {
-    public LanguageService()
-    {
-        DefaultLanguage = Language.English;
-    }
-
-    public Language DefaultLanguage { get; }
+    public Language DefaultLanguage => Language.English;
     public Language CurrentLanguage => Thread.CurrentThread.CurrentUICulture;
 
     public void SetLanguage(Language language)
@@ -22,7 +17,7 @@ public class LanguageService
             throw new ArgumentException($"{nameof(language)} can't be empty.");
         }
 
-        I18NExtension.Culture = language;
         Thread.CurrentThread.CurrentUICulture = language;
+        I18NExtension.Culture = language;
     }
 }
