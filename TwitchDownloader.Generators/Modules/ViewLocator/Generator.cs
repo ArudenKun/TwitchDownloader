@@ -6,25 +6,24 @@ using H.Generators.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using TwitchDownloader.Attributes;
 using TwitchDownloader.Generators.Abstractions;
 using TwitchDownloader.Generators.Extensions;
-using TwitchDownloader.Generators.Modules.ViewLocator.Attributes;
 
 namespace TwitchDownloader.Generators.Modules.ViewLocator;
 
 [Generator]
-public sealed class Generator
-    : SourceGeneratorForTypeWithAttribute<ViewLocatorAttribute>
+public sealed class Generator : SourceGeneratorForTypeWithAttribute<ViewLocatorAttribute>
 {
     protected override string Id => "SVLG";
 
     protected override IEnumerable<FileWithName> StaticSources =>
-    [
-        new(
-            $"{typeof(ViewLocatorAttribute).FullName}",
-            Resources.ViewLocatorAttribute_cs.AsString()
-        ),
-    ];
+        [
+            new(
+                $"{typeof(ViewLocatorAttribute).FullName}",
+                Resources.ViewLocatorAttribute_cs.AsString()
+            ),
+        ];
 
     protected override string GenerateCode(
         Compilation compilation,
@@ -34,7 +33,9 @@ public sealed class Generator
         AnalyzerConfigOptions options
     )
     {
-        var targetSymbol = compilation.GetTypeByMetadataName("CommunityToolkit.Mvvm.ComponentModel.ObservableObject");
+        var targetSymbol = compilation.GetTypeByMetadataName(
+            "CommunityToolkit.Mvvm.ComponentModel.ObservableObject"
+        );
         var viewModelSymbols = compilation
             .GlobalNamespace.CollectTypeSymbols(targetSymbol)
             .Where(x => !x.IsAbstract)

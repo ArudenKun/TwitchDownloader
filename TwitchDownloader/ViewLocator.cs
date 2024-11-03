@@ -1,6 +1,6 @@
 using System.ComponentModel;
 using Avalonia.Controls;
-using TwitchDownloader.Generators.Modules.ViewLocator.Attributes;
+using TwitchDownloader.Attributes;
 using TwitchDownloader.Hosting;
 
 namespace TwitchDownloader;
@@ -14,7 +14,7 @@ public partial class ViewLocator
             return new TextBlock { Text = "ViewModel is null" };
 
         var viewModelType = viewModel.GetType();
-        
+
         if (!ViewMap.TryGetValue(viewModelType, out var factory))
         {
             return new TextBlock { Text = $"No view registered for {viewModelType.FullName}" };

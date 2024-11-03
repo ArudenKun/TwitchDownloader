@@ -1,32 +1,44 @@
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using AsyncImageLoader;
+using AsyncImageLoader.Loaders;
 using Avalonia.Markup.Xaml;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Core;
+using Serilog.Events;
+using ServiceScan.SourceGenerator;
 using TwitchDownloader.Helpers;
 using TwitchDownloader.Hosting;
+using TwitchDownloader.Services;
 using TwitchDownloader.ViewModels;
+using TwitchDownloader.ViewModels.Abstractions;
 using TwitchDownloader.Views;
 
 namespace TwitchDownloader;
 
-public sealed class App : AvaloniaHostingApplication<MainWindow>
+public sealed partial class App : AvaloniaHostingApplication<MainWindow>
 {
     public override void Initialize()
     {
         ServicePointManager.DefaultConnectionLimit = 20;
         AvaloniaXamlLoader.Load(this);
+
+        var diskCacheImageLoader = new DiskCachedWebImageLoader(AppInfo.CachesDir.Path);
+        ImageLoader.AsyncImageLoader = diskCacheImageLoader;
+        ImageBrushLoader.AsyncImageLoader = diskCacheImageLoader;
     }
 
     protected override void ConfigureServices(IServiceCollection services)
     {
-        services.AddSingleton<MainWindowViewModel>();
+        AddScannedViewModels(services);
 
         services.AddSingleton<IMessenger>(_ => WeakReferenceMessenger.Default);
+        services.AddSingleton<SettingsService>();
+        services.AddSingleton<LanguageService>();
     }
 
     protected override void ConfigureLogging(ILoggingBuilder builder)
@@ -34,33 +46,27 @@ public sealed class App : AvaloniaHostingApplication<MainWindow>
         const string TEMPLATE =
             "[{Timestamp:yyyy-MM-dd HH:mm:ss} {SourceContext} {Level:u3}] {Message:lj}{NewLine}{Exception}";
 
-        var loggingLevelSwitch =
-            new LoggingLevelSwitch(EnvironmentHelper.IsDebug
-                ? Serilog.Events.LogEventLevel.Debug
-                : Serilog.Events.LogEventLevel.Information);
+        var loggingLevelSwitch = new LoggingLevelSwitch(
+            EnvironmentHelper.IsDebug ? LogEventLevel.Debug : LogEventLevel.Information
+        );
 
-        builder.Services.AddSingleton(_ => loggingLevelSwitch);
+        builder.Services.AddSingleton(loggingLevelSwitch);
 
         Log.Logger = new LoggerConfiguration()
             .Enrich.FromLogContext()
             .Enrich.WithProperty("Version", AppInfo.AppVersion)
             .MinimumLevel.ControlledBy(loggingLevelSwitch)
             .WriteTo.Console(outputTemplate: TEMPLATE)
-            // .WriteTo.PersistentFile(
-            //     AppInfo.LogsDir.Path.JoinPath("logs.txt"),
-            //     outputTemplate: TEMPLATE,
-            //     persistentFileRollingInterval: PersistentFileRollingInterval.Day,
-            //     rollOnFileSizeLimit: true,
-            //     retainedFileCountLimit: 61
-            // )
+            .WriteTo.PersistentFile(
+                AppInfo.LogsDir.Path.JoinPath("logs.txt"),
+                outputTemplate: TEMPLATE,
+                persistentFileRollingInterval: PersistentFileRollingInterval.Day,
+                rollOnFileSizeLimit: true,
+                retainedFileCountLimit: 61
+            )
             .CreateLogger();
 
         builder.ClearProviders().AddSerilog(dispose: true);
-    }
-
-    protected override void OnInitialized(IServiceProvider services)
-    {
-        services.GetRequiredService<ILogger<App>>().LogInformation("Twitch Downloader Initialized");
     }
 
     protected override Task ConfigureMainWindow(MainWindow mainWindow, IServiceProvider services)
@@ -70,4 +76,31 @@ public sealed class App : AvaloniaHostingApplication<MainWindow>
         viewModel.Bind(mainWindow);
         return Task.CompletedTask;
     }
+
+    protected override void OnStartup(IServiceProvider services)
+    {
+        services.GetRequiredService<ILogger<App>>().LogInformation("TwitchDownloader Initialized");
+        var languageService = services.GetRequiredService<LanguageService>();
+        var settingsService = services.GetRequiredService<SettingsService>();
+        languageService.SetLanguage(settingsService.Language);
+    }
+
+    protected override void OnExit(IServiceProvider services)
+    {
+        services.GetRequiredService<SettingsService>().Save();
+    }
+
+    [GenerateServiceRegistrations(
+        AssignableTo = typeof(ISingletonViewModel),
+        Lifetime = ServiceLifetime.Singleton,
+        AsSelf = true,
+        AsImplementedInterfaces = true
+    )]
+    [GenerateServiceRegistrations(
+        AssignableTo = typeof(ITransientViewModel),
+        Lifetime = ServiceLifetime.Transient,
+        AsSelf = true,
+        AsImplementedInterfaces = true
+    )]
+    private partial void AddScannedViewModels(IServiceCollection services);
 }

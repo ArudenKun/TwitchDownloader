@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,10 @@ public record FilePath
     public FilePath(string path, bool? isDirectory = null)
     {
         Path = path;
-        IsDirectory = isDirectory ?? (Directory.Exists(path) && !File.Exists(path));
+        IsDirectory =
+            isDirectory
+            ?? (Directory.Exists(path) && !File.Exists(path))
+                || string.IsNullOrWhiteSpace(DotNetPath.GetExtension(path));
     }
 
     public FilePath Resolve(string subPath, bool? isDirectory = null) =>
@@ -30,6 +34,34 @@ public record FilePath
 
     public static FilePath operator --(FilePath curr) =>
         curr.TryGetParent(out var parentDir) ? parentDir : curr;
+
+    public static implicit operator FilePath(string path) => new(path);
+
+    public static implicit operator string(FilePath filePath) => filePath.Path;
+
+    public static implicit operator FilePath(DirectoryInfo path) => new(path.FullName);
+
+    public static implicit operator DirectoryInfo(FilePath filePath)
+    {
+        if (filePath.IsDirectory)
+        {
+            return new DirectoryInfo(filePath.Path);
+        }
+
+        throw new InvalidOperationException("The path is not a directory");
+    }
+
+    public static implicit operator FilePath(FileInfo path) => new(path.FullName);
+
+    public static implicit operator FileInfo(FilePath filePath)
+    {
+        if (!filePath.IsDirectory)
+        {
+            return new FileInfo(filePath.Path);
+        }
+
+        throw new InvalidOperationException("The path is not a file");
+    }
 
     public bool TryGetParent(out FilePath filePath)
     {

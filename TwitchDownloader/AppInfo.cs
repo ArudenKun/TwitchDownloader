@@ -13,8 +13,8 @@ public static class AppInfo
         isDirectory: true
     );
 
-    public static readonly FilePath ConfigPath = FilePath.Create(
-        DataDir.Path.JoinPath("config.json"),
+    public static readonly FilePath Settings = FilePath.Create(
+        DataDir.Path.JoinPath("settings.json"),
         false
     );
 

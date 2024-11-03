@@ -1,0 +1,56 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:material="using:Material.Icons.Avalonia"
+             xmlns:translations="using:TwitchDownloader.Translations"
+             xmlns:vm="TwitchDownloader.ViewModels"
+             x:DataType="vm:SettingsViewModel"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TwitchDownloader.Views.Dialogs.SettingsView">
+    <UserControl.Styles>
+        <Style Selector="TextBlock.Header">
+            <Setter Property="FontSize" Value="26" />
+            <Setter Property="Margin" Value="0, 0, 0, 10" />
+        </Style>
+    </UserControl.Styles>
+    <ScrollViewer VerticalScrollBarVisibility="Hidden">
+        <StackPanel>
+            <!--  Cache  -->
+            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
+            <StackPanel Orientation="Horizontal" Spacing="7">
+                <!-- ReSharper disable once Xaml.StyleClassNotFound -->
+                <TextBlock Classes="h4" Text="{I18N {x:Static translations:LangKeys.CacheFolder}}"
+                           VerticalAlignment="Center" />
+                <TextBox
+                    IsReadOnly="True"
+                    IsEnabled="False"
+                    MaxWidth="400"
+                    MinWidth="350"
+                    Name="CacheDirectoryTextBox"
+                    Text="{Binding CacheDirectory}" />
+                <Button Command="{Binding BrowseCacheDirectoryCommand}">
+                    <material:MaterialIcon Kind="FolderSearch" FontSize="24" />
+                </Button>
+                <Button Command="{Binding OpenCacheDirectoryCommand}"
+                        IsEnabled="{Binding ElementName=CacheDirectoryTextBox, Path=Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <material:MaterialIcon Kind="Folder" FontSize="24" />
+                </Button>
+            </StackPanel>
+
+            <!--  Language  -->
+            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
+            <TextBlock
+                Classes="h4"
+                Margin="0,30,0,10"
+                Text="{I18N {x:Static translations:LangKeys.ApplicationLanguage}}" />
+            <ComboBox
+                Focusable="False"
+                ItemsSource="{Binding Languages}"
+                SelectedItem="{Binding Language, Mode=TwoWay}"
+                DisplayMemberBinding="{Binding Name}"
+                Width="200">
+            </ComboBox>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

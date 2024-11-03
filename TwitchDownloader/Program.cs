@@ -1,5 +1,5 @@
-﻿using Avalonia;
-using System;
+﻿using System;
+using Avalonia;
 using TwitchDownloader.Hosting;
 using TwitchDownloader.Utilities;
 using Velopack;
@@ -24,17 +24,18 @@ internal static class Program
         catch (Exception ex)
         {
             if (OperatingSystem.IsWindows())
-                _ = NativeMethods.Windows.MessageBox(0, ex.ToString(), "TwitchDownloader Fatal Error", 0x10);
+                _ = NativeMethods.Windows.MessageBox(
+                    0,
+                    ex.ToString(),
+                    "TwitchDownloader Fatal Error",
+                    0x10
+                );
 
             throw;
         }
     }
 
     // Avalonia configuration, don't remove; also used by visual designer.
-    public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>()
-            .UsePlatformDetect()
-            .UseHosting()
-            .WithInterFont()
-            .LogToTrace();
+    public static AppBuilder BuildAvaloniaApp() =>
+        AppBuilder.Configure<App>().UsePlatformDetect().UseHosting().LogToTrace();
 }
