@@ -10,6 +10,6 @@ public class ThemeColor : SmartEnum<ThemeColor>
     public static readonly ThemeColor Red = new(nameof(Red), (int)SukiColor.Red);
     public static readonly ThemeColor Orange = new(nameof(Orange), (int)SukiColor.Orange);
 
-    public ThemeColor(string name, int value)
+    private ThemeColor(string name, int value)
         : base(name, value) { }
 }

@@ -9,6 +9,9 @@
 [assembly: XmlnsDefinition("TwitchDownloader.ViewModels", "TwitchDownloader.ViewModels")]
 [assembly: XmlnsPrefix("TwitchDownloader.ViewModels", "vm")]
 
+[assembly: XmlnsDefinition("TwitchDownloader.Translations", "TwitchDownloader.Translations")]
+[assembly: XmlnsPrefix("TwitchDownloader.Translations", "localization")]
+
 // [assembly: XmlnsDefinition("vma", "TwitchDownloader.ViewModels.Abstractions")]
 // [assembly: XmlnsDefinition("vmd", "TwitchDownloader.ViewModels.Dialogs")]
 // [assembly: XmlnsDefinition("vmp", "TwitchDownloader.ViewModels.Pages")]

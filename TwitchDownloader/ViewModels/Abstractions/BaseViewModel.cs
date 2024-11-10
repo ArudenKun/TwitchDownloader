@@ -10,7 +10,7 @@ using SukiUI.Toasts;
 namespace TwitchDownloader.ViewModels.Abstractions;
 
 [ObservableRecipient]
-public abstract partial class BaseViewModel : ObservableValidator, IViewModel
+public abstract partial class BaseViewModel : ObservableObject, IViewModel
 {
     private readonly WeakEventManager _weakEventManager = new();
 

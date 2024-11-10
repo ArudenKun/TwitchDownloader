@@ -1,11 +1,11 @@
 using System.ComponentModel;
 using Avalonia.Controls;
-using TwitchDownloader.Attributes;
+using AvaloniaExtras.Attributes;
 using TwitchDownloader.Hosting;
 
 namespace TwitchDownloader;
 
-[ViewLocator]
+[StaticViewLocator]
 public partial class ViewLocator
 {
     public Control Build(object? viewModel)

@@ -1,21 +1,31 @@
-<suki:SukiWindow xmlns="https://github.com/avaloniaui"
-                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 xmlns:suki="https://github.com/kikipoulet/SukiUI"
-                 xmlns:translations="using:TwitchDownloader.Translations"
-                 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-                 x:Class="TwitchDownloader.Views.MainView"
-                 WindowStartupLocation="CenterScreen"
-                 Width="1280"
-                 Height="720"
-                 xmlns:lucide="using:LucideAvalonia"
-                 xmlns:vm="TwitchDownloader.ViewModels"
-                 x:DataType="vm:MainViewModel"
-                 CanMaximize="False"
-                 CanResize="False"
-                 Icon="/Assets/icon.ico"
-                 Title="Twitch Downloader">
+<suki:SukiWindow
+    x:Class="TwitchDownloader.Views.MainView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extras="https://github.com/ArudenKun/AvaloniaExtras"
+    xmlns:material="using:Material.Icons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:suki="https://github.com/kikipoulet/SukiUI"
+    xmlns:translations="using:TwitchDownloader.Translations"
+    xmlns:vm="TwitchDownloader.ViewModels"
+    Title="Twitch Downloader"
+    Width="1280"
+    Height="720"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:MainViewModel"
+    CanMaximize="False"
+    CanResize="False"
+    Icon="/Assets/icon.ico"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+
+    <suki:SukiWindow.RightWindowTitleBarControls>
+        <Button Command="{Binding SettingsViewModel.ChangeBaseThemeCommand}">
+            <material:MaterialIcon Kind="{Binding ThemeButtonIconKind}" />
+        </Button>
+    </suki:SukiWindow.RightWindowTitleBarControls>
 
     <suki:SukiWindow.Hosts>
         <suki:SukiDialogHost Manager="{Binding DialogManager}" />
@@ -23,78 +33,82 @@
     </suki:SukiWindow.Hosts>
 
     <suki:SukiWindow.LogoContent>
-        <Image Source="/Assets/icon.ico" Width="20" Height="20" VerticalAlignment="Center" />
+        <Image
+            Width="20"
+            Height="20"
+            VerticalAlignment="Center"
+            Source="/Assets/icon.ico" />
     </suki:SukiWindow.LogoContent>
 
-    <suki:SukiSideMenu IsSearchEnabled="False" SidebarToggleEnabled="False" SelectedItem="{Binding CurrentPage}">
+    <suki:SukiSideMenu SelectedItem="{Binding CurrentPage}" SidebarToggleEnabled="False">
+
+        <suki:SukiSideMenu.Styles>
+            <Style Selector="material|MaterialIcon">
+                <Setter Property="Width" Value="20" />
+                <Setter Property="Height" Value="20" />
+            </Style>
+        </suki:SukiSideMenu.Styles>
 
         <suki:SukiSideMenu.Items>
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-            <suki:SukiSideMenuItem Classes="Compact"
-                                   Header="{I18N {x:Static translations:LangKeys.VodDownload}}">
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+            <suki:SukiSideMenuItem Classes="Compact" Header="{extras:Localize {x:Static translations:ResXLocalizerKeys.VodDownload}}">
                 <suki:SukiSideMenuItem.Icon>
-                    <lucide:Lucide Icon="Video" />
+                    <material:MaterialIcon Kind="Video" />
                 </suki:SukiSideMenuItem.Icon>
                 <suki:SukiSideMenuItem.PageContent>
                     <ContentControl Content="{Binding VodDownloadViewModel}" />
                 </suki:SukiSideMenuItem.PageContent>
             </suki:SukiSideMenuItem>
 
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-            <suki:SukiSideMenuItem Classes="Compact"
-                                   Header="{I18N {x:Static translations:LangKeys.ClipDownload}}">
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+            <suki:SukiSideMenuItem Classes="Compact" Header="{extras:Localize {x:Static translations:ResXLocalizerKeys.ClipDownload}}">
                 <suki:SukiSideMenuItem.Icon>
-                    <lucide:Lucide Icon="Clapperboard" />
+                    <material:MaterialIcon Kind="Clapperboard" />
                 </suki:SukiSideMenuItem.Icon>
                 <suki:SukiSideMenuItem.PageContent>
                     <ContentControl Content="{Binding ClipDownloadViewModel}" />
                 </suki:SukiSideMenuItem.PageContent>
             </suki:SukiSideMenuItem>
 
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-            <suki:SukiSideMenuItem Classes="Compact"
-                                   Header="{I18N {x:Static translations:LangKeys.ChatDownload}}">
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+            <suki:SukiSideMenuItem Classes="Compact" Header="{extras:Localize {x:Static translations:ResXLocalizerKeys.ChatDownload}}">
                 <suki:SukiSideMenuItem.Icon>
-                    <lucide:Lucide Icon="MessageCircleMore" />
+                    <material:MaterialIcon Kind="Message" />
                 </suki:SukiSideMenuItem.Icon>
                 <suki:SukiSideMenuItem.PageContent>
                     <ContentControl Content="{Binding ChatDownloadViewModel}" />
                 </suki:SukiSideMenuItem.PageContent>
             </suki:SukiSideMenuItem>
 
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-            <suki:SukiSideMenuItem Classes="Compact"
-                                   Header="{I18N {x:Static translations:LangKeys.ChatUpdate}}">
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+            <suki:SukiSideMenuItem Classes="Compact" Header="{extras:Localize {x:Static translations:ResXLocalizerKeys.ChatUpdate}}">
                 <suki:SukiSideMenuItem.Icon>
-                    <lucide:Lucide Icon="MessageSquarePlus" />
+                    <material:MaterialIcon Kind="MessagePlus" />
                 </suki:SukiSideMenuItem.Icon>
                 <suki:SukiSideMenuItem.PageContent>
                     <ContentControl Content="{Binding ChatUpdaterViewModel}" />
                 </suki:SukiSideMenuItem.PageContent>
             </suki:SukiSideMenuItem>
 
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-            <suki:SukiSideMenuItem Classes="Compact"
-                                   Header="{I18N {x:Static translations:LangKeys.ChatRender}}">
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+            <suki:SukiSideMenuItem Classes="Compact" Header="{extras:Localize {x:Static translations:ResXLocalizerKeys.ChatRender}}">
                 <suki:SukiSideMenuItem.Icon>
-                    <lucide:Lucide Icon="MessageSquareShare" />
+                    <material:MaterialIcon Kind="MessageBookmark" />
                 </suki:SukiSideMenuItem.Icon>
                 <suki:SukiSideMenuItem.PageContent>
                     <ContentControl Content="{Binding ChatRenderViewModel}" />
                 </suki:SukiSideMenuItem.PageContent>
             </suki:SukiSideMenuItem>
 
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-            <suki:SukiSideMenuItem Classes="Compact"
-                                   Header="{I18N {x:Static translations:LangKeys.TaskQueue}}">
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+            <suki:SukiSideMenuItem Classes="Compact" Header="{extras:Localize {x:Static translations:ResXLocalizerKeys.TaskQueue}}">
                 <suki:SukiSideMenuItem.Icon>
-                    <lucide:Lucide Icon="List" />
+                    <material:MaterialIcon Kind="ClipboardList" />
                 </suki:SukiSideMenuItem.Icon>
                 <suki:SukiSideMenuItem.PageContent>
                     <ContentControl Content="{Binding TaskQueueViewModel}" />
                 </suki:SukiSideMenuItem.PageContent>
             </suki:SukiSideMenuItem>
-
 
         </suki:SukiSideMenu.Items>
 
@@ -112,27 +126,33 @@
         </suki:SukiSideMenu.Styles>
 
         <suki:SukiSideMenu.HeaderContent>
-            <Image Width="80"
-                   Height="80"
-                   Margin="30,10,30,30"
-                   Classes="AppIcon"
-                   Source="/Assets/icon.ico" />
+            <Image
+                Width="80"
+                Height="80"
+                Margin="30,10,30,30"
+                Classes="AppIcon"
+                Source="/Assets/icon.ico" />
         </suki:SukiSideMenu.HeaderContent>
 
         <suki:SukiSideMenu.FooterContent>
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="5">
                 <StackPanel.Styles>
-                    <Style Selector="lucide|Lucide">
+                    <Style Selector="material|MaterialIcon">
                         <Setter Property="Width" Value="25" />
                         <Setter Property="Height" Value="25" />
                     </Style>
                 </StackPanel.Styles>
-                <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-                <Button Classes="Outlined"
-                        Command="{Binding OpenSettingsDialogCommand}"
-                        ToolTip.Placement="Top"
-                        ToolTip.Tip="Open Settings">
-                    <lucide:Lucide Icon="Settings" />
+                <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+                <Button
+                    Background="{DynamicResource SukiBorderBrush}"
+                    Classes="Rounded"
+                    Command="{Binding OpenSettingsDialogCommand}"
+                    ToolTip.Placement="Top"
+                    ToolTip.Tip="Open Settings">
+                    <material:MaterialIcon Kind="Settings" />
                 </Button>
             </StackPanel>
         </suki:SukiSideMenu.FooterContent>

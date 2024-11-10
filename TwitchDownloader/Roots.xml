@@ -1,0 +1,4 @@
+﻿<linker>
+    <!-- App -->
+    <assembly fullname="TwitchDownloader" preserve="All" />
+</linker>

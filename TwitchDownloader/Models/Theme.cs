@@ -9,7 +9,7 @@ public class Theme : SmartEnum<Theme, string>
     public static readonly Theme Light = new("Light", "Light");
     public static readonly Theme Dark = new("Dark", "Dark");
 
-    public Theme(string name, string value)
+    private Theme(string name, string value)
         : base(name, value) { }
 
     public static implicit operator Theme(ThemeVariant themeVariant)

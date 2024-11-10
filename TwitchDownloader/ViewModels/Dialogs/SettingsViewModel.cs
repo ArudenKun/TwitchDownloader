@@ -4,8 +4,11 @@ using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
+using SukiUI;
 using TwitchDownloader.Models;
+using TwitchDownloader.Models.Messaging;
 using TwitchDownloader.Services;
 using TwitchDownloader.ViewModels.Abstractions;
 
@@ -35,6 +38,8 @@ public partial class SettingsViewModel : BaseViewModel, ISingletonViewModel
 
         CacheDirectory = _settingsService.CacheDirectory;
         Language = _settingsService.Language;
+        Theme = _settingsService.Theme;
+        ThemeColor = _settingsService.ThemeColor;
     }
 
     #region Cache
@@ -99,6 +104,34 @@ public partial class SettingsViewModel : BaseViewModel, ISingletonViewModel
         _languageService.SetLanguage(newValue);
         _settingsService.Language = newValue;
         _logger.LogInformation("Language changed to: {Language}", newValue.Name);
+    }
+
+    #endregion
+
+    #region Theming
+
+    [ObservableProperty]
+    private Theme _theme;
+
+    [ObservableProperty]
+    private ThemeColor _themeColor;
+
+    [RelayCommand]
+    private void ChangeBaseTheme(Theme? theme = null)
+    {
+        var instance = SukiTheme.GetInstance();
+
+        if (theme is null)
+        {
+            instance.SwitchBaseTheme();
+        }
+        else
+        {
+            instance.ChangeBaseTheme(theme);
+        }
+
+        Theme = _settingsService.Theme = instance.ActiveBaseTheme;
+        Messenger.Send(new ThemeMessages(Theme));
     }
 
     #endregion

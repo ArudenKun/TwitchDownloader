@@ -5,6 +5,7 @@ namespace TwitchDownloader;
 
 public static class AppInfo
 {
+    public const string GITHUB_URL = "https://github.com/ArudenKun/TwitchDownloader";
     public static readonly string AppName = nameof(TwitchDownloader);
     public static readonly string AppVersion = EnvironmentHelper.AppVersion.ToString(3);
 

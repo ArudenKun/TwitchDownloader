@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AsyncImageLoader;
 using AsyncImageLoader.Loaders;
 using Avalonia.Markup.Xaml;
+using AvaloniaExtras.Localization;
 using CommunityToolkit.Mvvm.Messaging;
 using HotAvalonia;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,8 +17,10 @@ using TwitchDownloader.Helpers;
 using TwitchDownloader.Hosting;
 using TwitchDownloader.Services;
 using TwitchDownloader.Services.Logging;
+using TwitchDownloader.Translations;
 using TwitchDownloader.ViewModels;
 using TwitchDownloader.ViewModels.Abstractions;
+using TwitchDownloader.ViewModels.Dialogs;
 using TwitchDownloader.Views;
 
 namespace TwitchDownloader;
@@ -29,6 +32,8 @@ public sealed partial class App : AvaloniaHostingApplication<MainView>
         ServicePointManager.DefaultConnectionLimit = 20;
         this.EnableHotReload();
         AvaloniaXamlLoader.Load(this);
+
+        Localizer.SetLocalizer(new ResXLocalizer());
 
         var diskCacheImageLoader = new DiskCachedWebImageLoader(AppInfo.CachesDir);
         ImageLoader.AsyncImageLoader = diskCacheImageLoader;
@@ -86,7 +91,9 @@ public sealed partial class App : AvaloniaHostingApplication<MainView>
         services.GetRequiredService<ILogger<App>>().LogInformation("TwitchDownloader Initialized");
         var languageService = services.GetRequiredService<LanguageService>();
         var settingsService = services.GetRequiredService<SettingsService>();
+        var settingsViewModel = services.GetRequiredService<SettingsViewModel>();
         languageService.SetLanguage(settingsService.Language);
+        settingsViewModel.ChangeBaseThemeCommand.Execute(settingsService.Theme);
     }
 
     protected override void OnExit(IServiceProvider services)
@@ -100,11 +107,11 @@ public sealed partial class App : AvaloniaHostingApplication<MainView>
         AsSelf = true,
         AsImplementedInterfaces = true
     )]
-    [GenerateServiceRegistrations(
-        AssignableTo = typeof(ITransientViewModel),
-        Lifetime = ServiceLifetime.Transient,
-        AsSelf = true,
-        AsImplementedInterfaces = true
-    )]
+    // [GenerateServiceRegistrations(
+    //     AssignableTo = typeof(ITransientViewModel),
+    //     Lifetime = ServiceLifetime.Transient,
+    //     AsSelf = true,
+    //     AsImplementedInterfaces = true
+    // )]
     private partial void AddScannedViewModels(IServiceCollection services);
 }

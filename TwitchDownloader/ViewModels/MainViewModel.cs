@@ -1,17 +1,21 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using Material.Icons;
 using SukiUI.Dialogs;
+using TwitchDownloader.Models;
+using TwitchDownloader.Models.Messaging;
 using TwitchDownloader.ViewModels.Abstractions;
 using TwitchDownloader.ViewModels.Dialogs;
 using TwitchDownloader.ViewModels.Pages;
 
 namespace TwitchDownloader.ViewModels;
 
-public sealed partial class MainViewModel : BaseViewModel, ISingletonViewModel
+public sealed partial class MainViewModel
+    : BaseViewModel,
+        ISingletonViewModel,
+        IRecipient<ThemeMessages>
 {
-    [ObservableProperty]
-    private IViewModel _currentPage;
-
     public MainViewModel(
         VodDownloadViewModel vodDownloadViewModel,
         ClipDownloadViewModel clipDownloadViewModel,
@@ -30,8 +34,15 @@ public sealed partial class MainViewModel : BaseViewModel, ISingletonViewModel
         TaskQueueViewModel = taskQueueViewModel;
         SettingsViewModel = settingsViewModel;
 
+        Messenger.Register(this);
+
         CurrentPage = VodDownloadViewModel;
     }
+
+    #region Navigation
+
+    [ObservableProperty]
+    private IViewModel _currentPage;
 
     public VodDownloadViewModel VodDownloadViewModel { get; }
     public ClipDownloadViewModel ClipDownloadViewModel { get; }
@@ -49,4 +60,23 @@ public sealed partial class MainViewModel : BaseViewModel, ISingletonViewModel
             .WithContent(SettingsViewModel)
             .WithActionButton("Close", _ => { }, true)
             .TryShow();
+
+    #endregion
+
+    #region Theme
+
+    public MaterialIconKind ThemeButtonIconKind =>
+        SettingsViewModel.Theme.Name switch
+        {
+            nameof(Theme.Light) => MaterialIconKind.MoonWaningCrescent,
+            nameof(Theme.Dark) => MaterialIconKind.WhiteBalanceSunny,
+            _ => MaterialIconKind.ThemeLightDark,
+        };
+
+    public void Receive(ThemeMessages message)
+    {
+        OnPropertyChanged(nameof(ThemeButtonIconKind));
+    }
+
+    #endregion
 }

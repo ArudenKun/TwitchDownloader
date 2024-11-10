@@ -19,7 +19,7 @@ public sealed class Language : SmartEnum<Language, string>
     public static readonly Language SimplifiedChinese = new("zh-CN", "简体中文（中国大陆）");
     public static readonly Language TraditionalChinese = new("zh-TW", "繁體中文（台灣）");
 
-    public Language(string name, string value)
+    private Language(string name, string value)
         : base(name, value) { }
 
     public static implicit operator Language(CultureInfo culture) =>

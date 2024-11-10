@@ -1,5 +1,6 @@
 ﻿using System;
 using Avalonia;
+using Serilog;
 using TwitchDownloader.Hosting;
 using TwitchDownloader.Utilities;
 using Velopack;
@@ -30,7 +31,7 @@ internal static class Program
                     "TwitchDownloader Fatal Error",
                     0x10
                 );
-
+            Log.Logger.Error(ex, "Unhandled exception");
             throw;
         }
     }

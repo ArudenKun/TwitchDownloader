@@ -1,10 +1,13 @@
-<Application xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="TwitchDownloader.App"
-             xmlns:local="using:TwitchDownloader"
-             xmlns:suki="https://github.com/kikipoulet/SukiUI"
-             RequestedThemeVariant="Default">
-    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+<Application
+    x:Class="TwitchDownloader.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:extras="https://github.com/ArudenKun/AvaloniaExtras"
+    xmlns:local="using:TwitchDownloader"
+    xmlns:material="using:Material.Icons.Avalonia"
+    xmlns:suki="https://github.com/kikipoulet/SukiUI"
+    RequestedThemeVariant="Default">
+    <!--  "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options.  -->
 
     <Application.DataTemplates>
         <local:ViewLocator />
@@ -12,6 +15,8 @@
 
     <Application.Styles>
         <suki:SukiTheme ThemeColor="Blue" />
+        <material:MaterialIconStyles />
+        <extras:AvaloniaExtrasTheme />
         <StyleInclude Source="Controls/Index.axaml" />
     </Application.Styles>
 </Application>

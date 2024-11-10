@@ -8,8 +8,7 @@ public interface IViewModel
     : IDisposable,
         IActivatable,
         INotifyPropertyChanged,
-        INotifyPropertyChanging,
-        INotifyDataErrorInfo
+        INotifyPropertyChanging
 {
     event Action Loaded;
     event Action Unloaded;

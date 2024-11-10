@@ -1,13 +1,17 @@
-﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:translations="using:TwitchDownloader.Translations"
-             xmlns:vm="TwitchDownloader.ViewModels"
-             xmlns:lucide="clr-namespace:LucideAvalonia;assembly=LucideAvalonia"
-             x:DataType="vm:SettingsViewModel"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="TwitchDownloader.Views.Dialogs.SettingsView">
+﻿<UserControl
+    x:Class="TwitchDownloader.Views.Dialogs.SettingsView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:extras="https://github.com/ArudenKun/AvaloniaExtras"
+    xmlns:material="using:Material.Icons.Avalonia"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:translations="using:TwitchDownloader.Translations"
+    xmlns:vm="TwitchDownloader.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:SettingsViewModel"
+    mc:Ignorable="d">
     <UserControl.Styles>
         <Style Selector="TextBlock.Header">
             <Setter Property="FontSize" Value="26" />
@@ -17,40 +21,40 @@
     <ScrollViewer VerticalScrollBarVisibility="Hidden">
         <StackPanel>
             <!--  Cache  -->
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
             <StackPanel Orientation="Horizontal" Spacing="7">
-                <!-- ReSharper disable once Xaml.StyleClassNotFound -->
-                <TextBlock Classes="h4" Text="{I18N {x:Static translations:LangKeys.CacheFolder}}"
-                           VerticalAlignment="Center" />
+                <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Classes="h4"
+                    Text="{extras:Localize {x:Static translations:ResXLocalizerKeys.CacheFolder}}" />
                 <TextBox
-                    IsReadOnly="True"
-                    IsEnabled="False"
-                    MaxWidth="400"
-                    MinWidth="350"
                     Name="CacheDirectoryTextBox"
+                    MinWidth="350"
+                    MaxWidth="400"
+                    IsEnabled="False"
+                    IsReadOnly="True"
                     Text="{Binding CacheDirectory}" />
                 <Button Command="{Binding BrowseCacheDirectoryCommand}">
-                    <lucide:Lucide Icon="FolderSearch" FontSize="24" />
+                    <material:MaterialIcon FontSize="24" Kind="FolderSearch" />
                 </Button>
-                <Button Command="{Binding OpenCacheDirectoryCommand}"
-                        IsEnabled="{Binding ElementName=CacheDirectoryTextBox, Path=Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
-                    <lucide:Lucide Icon="FolderOpen" FontSize="24" />
+                <Button Command="{Binding OpenCacheDirectoryCommand}" IsEnabled="{Binding ElementName=CacheDirectoryTextBox, Path=Text, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <material:MaterialIcon FontSize="24" Kind="FolderOpen" />
                 </Button>
             </StackPanel>
 
             <!--  Language  -->
-            <!-- ReSharper disable once Xaml.StyleClassNotFound -->
+            <!--  ReSharper disable once Xaml.StyleClassNotFound  -->
             <TextBlock
-                Classes="h4"
                 Margin="0,30,0,10"
-                Text="{I18N {x:Static translations:LangKeys.ApplicationLanguage}}" />
+                Classes="h4"
+                Text="{extras:Localize {x:Static translations:ResXLocalizerKeys.ApplicationLanguage}}" />
             <ComboBox
+                Width="200"
+                DisplayMemberBinding="{Binding Name}"
                 Focusable="False"
                 ItemsSource="{Binding Languages}"
-                SelectedItem="{Binding Language, Mode=TwoWay}"
-                DisplayMemberBinding="{Binding Name}"
-                Width="200">
-            </ComboBox>
+                SelectedItem="{Binding Language, Mode=TwoWay}" />
         </StackPanel>
     </ScrollViewer>
 </UserControl>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
@@ -12,9 +13,9 @@ using IApplicationLifetime = Avalonia.Controls.ApplicationLifetimes.IApplication
 
 namespace TwitchDownloader.Hosting;
 
-public abstract class AvaloniaHostingApplication<TMainWindow>
-    : Application,
-        IAvaloniaHostingApplicationInitializer
+public abstract class AvaloniaHostingApplication<
+    [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TMainWindow
+> : Application, IAvaloniaHostingApplicationInitializer
     where TMainWindow : Window
 {
     private HostApplicationBuilder? _hostBuilder;

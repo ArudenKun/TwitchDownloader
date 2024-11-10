@@ -15,7 +15,7 @@ public class BackgroundStyle : SmartEnum<BackgroundStyle>
     public static readonly BackgroundStyle Bubble =
         new(nameof(Bubble), (int)SukiBackgroundStyle.Bubble);
 
-    public BackgroundStyle(string name, int value)
+    private BackgroundStyle(string name, int value)
         : base(name, value) { }
 
     public static implicit operator BackgroundStyle(SukiBackgroundStyle style) =>

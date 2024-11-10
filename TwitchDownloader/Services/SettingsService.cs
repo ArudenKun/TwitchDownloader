@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Ardalis.SmartEnum.SystemTextJson;
 using Cogwheel;
@@ -25,10 +26,12 @@ public sealed partial class SettingsService : SettingsBase
         Load();
     }
 
-    public bool IsAutoUpdate { get; set; }
+    public bool CheckForUpdate { get; set; }
 
     [JsonConverter(typeof(SmartEnumNameConverter<Language, string>))]
-    public Language Language { get; set; } = CultureInfo.CurrentCulture;
+    public Language Language { get; set; } =
+        Language.List.FirstOrDefault(x => x.Name == CultureInfo.CurrentCulture.Name)
+        ?? Language.English;
 
     public TimeFormat TimeFormat { get; set; } = TimeFormat.Local;
 
@@ -42,6 +45,9 @@ public sealed partial class SettingsService : SettingsBase
 
     [JsonConverter(typeof(SmartEnumNameConverter<Theme, string>))]
     public Theme Theme { get; set; } = Theme.Default;
+
+    [JsonConverter(typeof(SmartEnumNameConverter<ThemeColor, int>))]
+    public ThemeColor ThemeColor { get; set; } = ThemeColor.Blue;
 
     public override void Save()
     {
@@ -65,6 +71,13 @@ public sealed partial class SettingsService : SettingsBase
     }
 
     [JsonSerializable(typeof(SettingsService))]
-    [JsonSourceGenerationOptions(WriteIndented = true, UseStringEnumConverter = true)]
-    private partial class JsonContext : JsonSerializerContext;
+    [JsonSourceGenerationOptions(
+#if DEBUG
+        WriteIndented = true,
+#endif
+        UseStringEnumConverter = true,
+        PropertyNamingPolicy = JsonKnownNamingPolicy.SnakeCaseLower,
+        AllowTrailingCommas = true
+    )]
+    private sealed partial class JsonContext : JsonSerializerContext;
 }

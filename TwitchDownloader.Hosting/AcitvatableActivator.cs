@@ -23,12 +23,12 @@ public static class AcitvatableActivator
 
         return;
 
-        void Loaded(object sender, RoutedEventArgs e)
+        void Loaded(object? sender, RoutedEventArgs e)
         {
             activatable.Activate();
         }
 
-        void Unloaded(object sender, RoutedEventArgs e)
+        void Unloaded(object? sender, RoutedEventArgs e)
         {
             activatable.Deactivate();
 
