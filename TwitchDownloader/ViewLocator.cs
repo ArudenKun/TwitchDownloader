@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using Avalonia.Controls;
 using AvaloniaExtras.Attributes;
-using TwitchDownloader.Hosting;
+using AvaloniaExtras.Hosting;
 
 namespace TwitchDownloader;
 

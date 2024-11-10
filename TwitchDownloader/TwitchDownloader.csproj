@@ -60,7 +60,8 @@
         <PackageReference Include="Avalonia.Desktop" Version="11.2.0"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.2.0"/>
-        <PackageReference Include="AvaloniaExtras" Version="0.0.0-dev.7" />
+        <PackageReference Include="AvaloniaExtras" Version="0.0.0-dev.10" />
+        <PackageReference Include="AvaloniaExtras.Hosting" Version="0.0.0-dev.10" />
         <PackageReference Include="Cogwheel" Version="2.1.0"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2"/>
         <PackageReference Include="DependencyPropertyGenerator" Version="1.4.0">
@@ -81,7 +82,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\TwitchDownloader.Hosting\TwitchDownloader.Hosting.csproj"/>
         <ProjectReference Include="..\TwitchDownloaderCore\TwitchDownloaderCore.csproj"/>
     </ItemGroup>
 

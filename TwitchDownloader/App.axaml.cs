@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AsyncImageLoader;
 using AsyncImageLoader.Loaders;
 using Avalonia.Markup.Xaml;
+using AvaloniaExtras.Hosting;
 using AvaloniaExtras.Localization;
 using CommunityToolkit.Mvvm.Messaging;
 using HotAvalonia;
@@ -14,7 +15,6 @@ using Serilog.Core;
 using Serilog.Events;
 using ServiceScan.SourceGenerator;
 using TwitchDownloader.Helpers;
-using TwitchDownloader.Hosting;
 using TwitchDownloader.Services;
 using TwitchDownloader.Services.Logging;
 using TwitchDownloader.Translations;
@@ -45,7 +45,6 @@ public sealed partial class App : AvaloniaHostingApplication<MainView>
         AddScannedViewModels(services);
         services.AddSingleton<IMessenger>(_ => WeakReferenceMessenger.Default);
         services.AddSingleton<SettingsService>();
-        services.AddSingleton<LanguageService>();
     }
 
     protected override void ConfigureLogging(ILoggingBuilder builder)
@@ -89,10 +88,9 @@ public sealed partial class App : AvaloniaHostingApplication<MainView>
     {
         Avalonia.Logging.Logger.Sink = new AvaloniaSerilogAdapter();
         services.GetRequiredService<ILogger<App>>().LogInformation("TwitchDownloader Initialized");
-        var languageService = services.GetRequiredService<LanguageService>();
         var settingsService = services.GetRequiredService<SettingsService>();
         var settingsViewModel = services.GetRequiredService<SettingsViewModel>();
-        languageService.SetLanguage(settingsService.Language);
+        Localizer.Language = settingsViewModel.Language;
         settingsViewModel.ChangeBaseThemeCommand.Execute(settingsService.Theme);
     }
 

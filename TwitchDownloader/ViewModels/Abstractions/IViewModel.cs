@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using TwitchDownloader.Hosting;
+using AvaloniaExtras.Hosting;
 
 namespace TwitchDownloader.ViewModels.Abstractions;
 

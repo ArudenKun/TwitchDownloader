@@ -1,7 +1,7 @@
 ﻿using System;
 using Avalonia;
+using AvaloniaExtras.Hosting;
 using Serilog;
-using TwitchDownloader.Hosting;
 using TwitchDownloader.Utilities;
 using Velopack;
 

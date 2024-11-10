@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Avalonia.Platform.Storage;
+using AvaloniaExtras.Localization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -20,21 +21,18 @@ public partial class SettingsViewModel : BaseViewModel, ISingletonViewModel
     private readonly IStorageProvider _storageProvider;
     private readonly ILauncher _launcher;
     private readonly SettingsService _settingsService;
-    private readonly LanguageService _languageService;
 
     public SettingsViewModel(
         ILogger<SettingsViewModel> logger,
         IStorageProvider storageProvider,
         ILauncher launcher,
-        SettingsService settingsService,
-        LanguageService languageService
+        SettingsService settingsService
     )
     {
         _logger = logger;
         _storageProvider = storageProvider;
         _launcher = launcher;
         _settingsService = settingsService;
-        _languageService = languageService;
 
         CacheDirectory = _settingsService.CacheDirectory;
         Language = _settingsService.Language;
@@ -101,7 +99,7 @@ public partial class SettingsViewModel : BaseViewModel, ISingletonViewModel
             return;
         }
 
-        _languageService.SetLanguage(newValue);
+        Localizer.Language = newValue;
         _settingsService.Language = newValue;
         _logger.LogInformation("Language changed to: {Language}", newValue.Name);
     }
