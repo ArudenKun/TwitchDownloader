@@ -17,6 +17,5 @@
         <suki:SukiTheme ThemeColor="Blue" />
         <material:MaterialIconStyles />
         <extras:AvaloniaExtrasTheme />
-        <StyleInclude Source="Controls/Index.axaml" />
     </Application.Styles>
 </Application>

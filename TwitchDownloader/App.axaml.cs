@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using System.Threading.Tasks;
 using AsyncImageLoader;
 using AsyncImageLoader.Loaders;
@@ -7,7 +6,6 @@ using Avalonia.Markup.Xaml;
 using AvaloniaExtras.Hosting;
 using AvaloniaExtras.Localization;
 using CommunityToolkit.Mvvm.Messaging;
-using HotAvalonia;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -29,8 +27,6 @@ public sealed partial class App : AvaloniaHostingApplication<MainView>
 {
     public override void Initialize()
     {
-        ServicePointManager.DefaultConnectionLimit = 20;
-        this.EnableHotReload();
         AvaloniaXamlLoader.Load(this);
 
         Localizer.SetLocalizer(new ResXLocalizer());
